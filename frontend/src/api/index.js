@@ -3,7 +3,7 @@ var socket = new WebSocket("ws://localhost:8080/ws");
 
 
 //this is kind if a switch statement , each 'event' to has a response to
-let connect = () => {
+let connect = cb => {
 	console.log("attempting connection ...");
 
 	socket.onopen = () => {
@@ -12,6 +12,7 @@ let connect = () => {
 
 	socket.onmessage = msg => {
 		console.log(msg);
+        cb(msg);
 	};
 
 	socket.onclose = event => {
