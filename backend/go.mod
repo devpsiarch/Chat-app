@@ -1,5 +1,5 @@
-module github.com/devpsiarch/Chat-app.git
+module github.com/devpsiarch/Chat-app
 
 go 1.18
 
-require github.com/gorilla/websocket v1.5.3 // indirect
+require github.com/gorilla/websocket v1.4.0

@@ -3,8 +3,10 @@ package main
 import (
     "fmt"
     "net/http"
-    "github.com/devpsiarch/Chat-app.git/websocket"
-) 
+    "github.com/devpsiarch/Chat-app/pkg/websocket"
+)
+
+
 
 //def websocket endpoint
 func Serve_ws(w http.ResponseWriter, r *http.Request){
