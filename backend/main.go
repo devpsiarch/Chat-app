@@ -12,7 +12,7 @@ import (
 func Serve_ws(w http.ResponseWriter, r *http.Request){
     fmt.Println(r.Host)
     //upgrading to ws
-    ws,err := upgrader.Upgrade(w,r,nil)
+    ws,err := websocket.Upgrade(w,r)
     if err != nil {
         fmt.Fprintf(w, "%+V\n", err)
     }
