@@ -9,20 +9,29 @@ import (
 
 
 //def websocket endpoint
-func Serve_ws(w http.ResponseWriter, r *http.Request){
-    fmt.Println(r.Host)
+func Serve_ws(pool *websocket.Pool,w http.ResponseWriter, r *http.Request){
+	fmt.Println("Websocket endpoint !!!!")
     //upgrading to ws
-    ws,err := websocket.Upgrade(w,r)
+    conn,err := websocket.Upgrade(w,r)
     if err != nil {
         fmt.Fprintf(w, "%+V\n", err)
     }
-    go websocket.Writer(ws)
-    websocket.Reader(ws)
+	
+	client := &websocket.Client{
+		Conn:conn,
+		Pool:pool,
+	}
+	pool.Register <- client
+	client.Read()
 }
 
 //the function defined below is a handler 
 func setuproutes() {
-    http.HandleFunc("/ws",Serve_ws)
+	pool := websocket.NewPool();
+	go pool.Start()
+    http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+        Serve_ws(pool, w, r)
+    })	
 }
 
 
